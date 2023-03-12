@@ -14,7 +14,7 @@ function LoginRoutes() {
     // Simulate a delay to show the loading page
     const timer = setTimeout(() => {
       setIsChatReady(true);
-    }, 2000);
+    }, 500);
 
     return () => {
       clearTimeout(timer);

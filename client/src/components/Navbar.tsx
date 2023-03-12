@@ -72,17 +72,17 @@ export const Navbar = () => {
         </div>
       )}
       {username && (
-        <div className="md:hidden text-white z-50">
+        <div className="md:hidden text-white z-50 mx-9 py-3">
           <GiHamburgerMenu
             onClick={() => setNavbar(!navbar)}
             className="my-4"
-            size={40}
+            size={50}
           />
           {navbar && (
             <nav
               className={
                 navbar
-                  ? "fixed left-0 top-0 w-[40%] h-full border-r border-r-gray-900 bg-[#000300] ease-in-out duration-500mx-8"
+                  ? "fixed left-0 top-0 w-[40%] h-full border-r border-r-gray-900 bg-[#000300] ease-in-out duration-500 mx-8"
                   : "ease-in-out duration-500 fixed left-[-100%]"
               }
             >

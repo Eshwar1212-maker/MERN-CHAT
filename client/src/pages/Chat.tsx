@@ -5,6 +5,7 @@ import { uniqBy } from "lodash";
 import axios from "axios";
 import Contact from "../components/Contact";
 import message from "./message.mp3";
+import { motion } from "framer-motion";
 
 import {
   AiOutlineUserAdd,
@@ -84,7 +85,16 @@ export const Chat = () => {
     peopleArray.forEach(({ userId, username }) => {
       people[userId] = username;
     });
-    setOnlinePeople(people);
+    axios.get("/people").then((res) => {
+      const offlinePeople = {};
+      res.data.forEach((person) => {
+        if (!people[person._id]) {
+          offlinePeople[person._id] = person;
+        }
+      });
+      setOfflinePeople(offlinePeople);
+      setOnlinePeople(people);
+    });
   };
 
   const connectToWs = () => {
@@ -179,7 +189,17 @@ export const Chat = () => {
   // console.log(onlinePeopleExcludingUser[id]);
 
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.1 }}
+      variants={{
+        hidden: { opacity: 0, x: 50 },
+        visible: { opacity: 1, x: 0 },
+      }}
+      className="flex flex-col md:flex-row h-screen"
+    >
       <div
         className={
           toggleUsers
@@ -206,7 +226,7 @@ export const Chat = () => {
           />
         )}
         {toggleUsers && (
-          <div className="flex flex-col items-center py-11 cursor-pointer">
+          <motion.div className="flex flex-col items-center py-11 cursor-pointer">
             <div className="hidden md:flex flex-row gap-9 md:flex-col items-center justify-center md:gap-2">
               <div className="text-4xl text-orange-900 font-extrabold font-second">
                 Chatify
@@ -280,7 +300,7 @@ export const Chat = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
       <div className="flex-grow p-2 flex flex-col">
@@ -369,7 +389,7 @@ export const Chat = () => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 /* <div
