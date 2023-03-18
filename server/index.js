@@ -11,7 +11,7 @@ const User = require('./models/User');
 const Message = require('./models/Message');
 const ws = require('ws');
 const fs = require('fs');
-
+const { S3Client } = require('@aws-sdk/client-s3')
 
 const app = express();
 
@@ -37,6 +37,16 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
 
 const jwtSecret = process.env.JWT_SECRET;
 
+const uploadToS3 = async (path, originalFileName, mimetype) => {
+    const client = new S3Client({
+        region: 'us-east-1',
+        credentials: {
+            accessKey: process.env.S3_ACCESS_KEY,
+            secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
+        }
+    })
+}
+
 //Routes
 async function getUserDataFromRequest(req, res) {
     return new Promise((res, rej) => {
@@ -51,7 +61,6 @@ async function getUserDataFromRequest(req, res) {
         }
     })
 }
-
 app.get('/messages/:userId', async (req, res) => {
     const { userId } = req.params;
     const userData = await getUserDataFromRequest(req);
