@@ -32,6 +32,7 @@ interface OnlinePeople {
 }
 
 export const Chat = () => {
+  const [users, setUsers] = useState<OnlinePeople>({});
   const [toggleUsers, settoggleUsers] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [ws, setWs] = useState<WebSocketType>(null);
@@ -87,15 +88,22 @@ export const Chat = () => {
     });
     axios.get("/people").then((res) => {
       const offlinePeople = {};
+      const allPeople = {};
+      console.log(res);
       res.data.forEach((person) => {
-        if (!people[person._id]) {
-          offlinePeople[person._id] = person;
+        allPeople[person._id] = person;
+        if (people[person._id]) {
+          allPeople[person._id] = person;
         }
       });
-      setOfflinePeople(offlinePeople);
+
+      setOfflinePeople(allPeople);
       setOnlinePeople(people);
+      setUsers(allPeople);
     });
   };
+
+  console.log(users);
 
   const connectToWs = () => {
     const ws = new WebSocket("ws://localhost:4000");
@@ -180,13 +188,6 @@ export const Chat = () => {
       });
     };
   };
-
-  // const filteredUsers = Object.keys(onlinePeopleExcludingUser).filter((key) =>
-  //   key.includes(searchQuery)
-  // );
-  // console.log("Filtered Users: " + filteredUsers);
-  // console.table(onlinePeopleExcludingUser);
-  // console.log(onlinePeopleExcludingUser[id]);
 
   return (
     <motion.div

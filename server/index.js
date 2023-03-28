@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
-const jsonwebtoken = require('jsonwebtoken')
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const User = require('./models/User');
@@ -43,8 +42,9 @@ const uploadToS3 = async (path, originalFileName, mimetype) => {
         credentials: {
             accessKey: process.env.S3_ACCESS_KEY,
             secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
-        }
-    })
+        },
+    });
+    console.log({ path, originalFileName, mimetype })
 }
 
 //Routes
