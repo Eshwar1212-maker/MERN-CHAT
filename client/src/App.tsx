@@ -8,7 +8,7 @@ import Profile from "./pages/Profile";
 import Rooms from "./pages/Rooms";
 
 const App = () => {
-  axios.defaults.baseURL = "http://localhost:4000";
+  axios.defaults.baseURL = "http://localhost:8080";
   axios.defaults.withCredentials = true;
 
   return (

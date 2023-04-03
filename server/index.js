@@ -125,7 +125,7 @@ app.post('/register', async (req, res) => {
         res.status(500).json('error');
     }
 });
-const server = app.listen(4000);
+const server = app.listen(8080);
 
 
 const wss = new ws.WebSocketServer({ server });

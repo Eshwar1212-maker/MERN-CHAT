@@ -58,6 +58,7 @@ export const Chat = () => {
     if (selectedUser) {
       axios.get("/messages/" + selectedUser).then((res) => {
         setMessages(res.data);
+        console.log(res.data);
       });
     }
   }, [selectedUser]);
@@ -106,7 +107,7 @@ export const Chat = () => {
   console.log(users);
 
   const connectToWs = () => {
-    const ws = new WebSocket("ws://localhost:4000");
+    const ws = new WebSocket("ws://localhost:8080");
     setWs(ws);
     ws.addEventListener("message", handleMessage);
     ws.removeEventListener("close", () => {
