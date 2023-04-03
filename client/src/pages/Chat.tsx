@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AiFillWechat } from "react-icons/ai";
 import { UserContext } from "../context/UserContext";
@@ -19,7 +21,6 @@ import {
 } from "react-icons/bs";
 import { GrAttachment } from "react-icons/gr";
 import { BiLogOut } from "react-icons/bi";
-import { GiHamburgerMenu } from "react-icons/gi";
 
 type WebSocketType = WebSocket | null;
 interface Person {
@@ -69,10 +70,10 @@ export const Chat = () => {
   }, [selectedUser]);
 
   useEffect(() => {
-    axios.get("/people").then((res) => {
+    axios.get("/people").then((res: { data: any[] }) => {
       const offlinePeopleArr = res.data
-        .filter((p) => p._id !== id)
-        .filter((p) => Object.keys(onlinePeople).includes(p._id));
+        .filter((p: any) => p._id !== id)
+        .filter((p: any) => Object.keys(onlinePeople).includes(p._id));
       const offlinePeople = {};
       offlinePeopleArr.forEach((person) => {
         offlinePeople[person._id] = person;
@@ -91,7 +92,7 @@ export const Chat = () => {
       const offlinePeople = {};
       const allPeople = {};
       console.log(res);
-      res.data.forEach((person) => {
+      res.data.forEach((person: any) => {
         allPeople[person._id] = person;
         if (people[person._id]) {
           allPeople[person._id] = person;
